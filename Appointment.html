@@ -137,19 +137,30 @@
 
 
    
-    .contact-info {
-      background: #267679;
-      color: white;
-      padding: 30px;
-      border-radius: 10px;
-      margin-top: 30px;
-    }
-    .contact-info h4 {
-      border-bottom: 2px solid #fff;
-      display: inline-block;
-      padding-bottom: 5px;
-      margin-bottom: 15px;
-    }
+.text-gold, .slot-heading {
+  color: #d4af37; 
+}
+
+.slot-heading {
+  display: inline-block;
+  position: relative;
+  padding-bottom: 5px;
+}
+
+.slot-heading::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 50%;  
+  height: 3px;  
+  background-color: #0a7a59;
+  border-radius: 2px;
+}
+
+
+
+    
 
 
     
@@ -418,7 +429,7 @@
               <input type="text" class="form-control" placeholder="Enter provider name">
             </div>
             <div class="time-slots-wrapper mb-4">
-                <h5 class="fw-bold mb-3 text-primary">Select Time Slot *</h5>
+                <h5 class="fw-bold mb-3 text-gold slot-heading">Select Time Slot *</h5>
                 <div class="row g-2">
                   <div class="col-6 col-md-4 col-lg-3">
                     <div class="time-slot-card" data-value="7:00 AM - 8:00 AM">7:00 AM – 8:00 AM</div>
@@ -494,8 +505,8 @@
         </div>
   
   <div class="sidebar-box mb-4">
-    <h5>Contact Information</h5>
-    <p class="mb-1"><i class="bi bi-geo-alt-fill me-2"></i> Mlolongo, Nairobi</p>
+    <h5 class="fw-bold" style="color:#d4af37;">Contact Information</h5>
+    <p class="mb-1"><i class="bi bi-geo-alt-fill me-2"></i> Nairobi, Kenya</p>
     <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> 
       <a href="mailto:wandelamichael@gmail.com" class="text-decoration-none">wandelamichael@gmail.com</a>
     </p>
@@ -509,12 +520,17 @@
 
 
 <div class="sidebar-box">
-    <h5>Our Location</h5>
-    <p class="small">We are located at <strong>Mlolongo, Nairobi</strong></p>
+    <h5 class="fw-bold" style="color:#d4af37;">Our Location</h5>
+    <p class="small">We are located at <strong>Nairobi, Kenya</strong></p>
     <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.7987!2d36.9233!3d-1.3733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1100dfb!2sMlolongo!5e0!3m2!1sen!2ske!4v123456789"
-      width="100%" height="520"  style="border:0; border-radius:8px;" allowfullscreen="" loading="lazy">
-    </iframe>
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.216002094477!2d36.8219463!3d-1.2920659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d2f0e1df!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1727896543210!5m2!1sen!2ske" 
+    width="150%" 
+    height="600" 
+    style="border:0; border-radius:8px;" 
+    allowfullscreen="" 
+    loading="lazy" 
+    referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
   </div>
 
 </div>
