@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Book Appointment - Golden Oak Dental Clinic</title>
+  <title>FACULTIES - Oral Surgery</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <style>
@@ -56,127 +56,23 @@
 
 
 
-  .btn-appointment {
-    background: #0a1131;
-    color: #fff;
-    border-radius: 30px;
-    padding: 8px 16px;
-  }
-  .btn-appointment:hover {
-    background: #103031;
-    color: #fff;
-  }
 
-
-  .appointment-header {
-  background: url('dental-bg.jpg') center/cover no-repeat;
+  .Oral-Surgery-header{
+  background: url('endodontics.jpg') center/cover no-repeat;
   min-height: 300px;
   position: relative;
   padding: 60px 0;
 }
 
 
-.appointment-header::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.3);
-}
-
-.appointment-header .container {
-  position: relative;
-  z-index: 2;
-}
-
-.breadcrumb {
-  background: transparent !important; 
-  margin-bottom: 20px;
-}
-
-.breadcrumb-item a {
-  color: #ffd700 !important; 
-  font-weight: 600;
-}
-
-.breadcrumb-item.active {
-  color: #fff !important;
-}
-
-
-
-
-
-    
-    .appointment-form {
-      background: white;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-      margin-top: -40px;
-      position: relative;
-      z-index: 5;
-    }
-    .form-control:focus {
-      border-color: #13aac4;
-      box-shadow: 0 0 6px rgba(19, 170, 196, 0.4);
-    }
-    .btn-appointment {
-      background: #13aac4;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 30px;
-      transition: 0.3s;
-    }
-    .btn-appointment:hover {
-      background: #0d7d8d;
-      color: #fff;
-    }
-   
-.time-slot-card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  background: #f9f9f9;
-  color: #333;
-}
-.time-slot-card:hover {
-  background: #e0f7f7;
-  border-color: #13aac4;
-}
-.time-slot-card.selected {
-  background: #13aac4;
-  border-color: #0c8788;
-  color: white;
-}
-
-
-   
-.text-gold, .slot-heading {
-  color: #d4af37; 
-}
-
-.slot-heading {
-  display: inline-block;
-  position: relative;
-  padding-bottom: 5px;
-}
-
-.slot-heading::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 50%;  
-  height: 3px;  
-  background-color: #0a7a59;
-  border-radius: 2px;
-}
-
-
+.zoom-img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    cursor: pointer;
+  }
+  .zoom-img:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
 
     
 
@@ -327,7 +223,7 @@
             <ul class="dropdown-menu">
               <li><a class="dropdown-item" href="Orthodontics.html">Orthodontics</a></li>
               <li><a class="dropdown-item" href="endodontics.html">Endodontics</a></li>
-              
+          
               <li><a class="dropdown-item" href="Oral Surgery.html">Oral & Maxillofacial Surgery</a></li>
             </ul>
           </li>
@@ -365,223 +261,64 @@
       </div>
     </div>
   </nav>
-  <section class="appointment-header d-flex align-items-center text-white">
-    <div class="container">
-  
 
+
+        <section class="hero-section text-white d-flex align-items-center" 
+        style="background: url('Oral Surgery-hero.jpg') center/cover no-repeat; height: 550px; position: relative;">
+        
+          <div class="container text-center">
+            <h1 class="fw-bold" style="color: #22d3ca;"> Our Dentists are focused on diagnosing and treating diseases, injuries, and defects of the mouth, jaws, and face through surgical intervention</h>
+        
       <nav aria-label="breadcrumb" class="mb-3">
         <ol class="breadcrumb">
           <li class="breadcrumb-item">
-            <a href="index.html" class="text-decoration-none text-warning">Hom\e</a>
+            <a href="index.html" class="text-decoration-none text-warning">Home</a>
           </li>
-          <li class="breadcrumb-item active text-white" aria-current="page">Appointment</li>
+          <li class="breadcrumb-item active text-white" aria-current="page">Oral-Surgery</li>
         </ol>
       </nav>
-  
-     
-      <h1 class="fw-bold display-5">Book Your Appointment</h1>
-      <p class="lead">Get treated with the best care at Golden Oak Dental Clinic</p>
   
     </div>
   </section>
 
-  
-  <div class="container pb-5 background-image">
-    <div class="row justify-content-center">
-      <div class="col-lg-8">
-        <div class="appointment-form">
-            <form>
-                <!-- First Name -->
-                <div class="mb-3">
-                  <label class="form-label">First Name *</label>
-                  <input type="text" class="form-control" required>
-                </div>
-              
-                <!-- Last Name -->
-                <div class="mb-3">
-                  <label class="form-label">Last Name *</label>
-                  <input type="text" class="form-control" required>
-                </div>
-              
-                <!-- Gender -->
-                <div class="mb-3">
-                  <label class="form-label">Gender *</label>
-                  <select class="form-select" required>
-                    <option selected disabled>Select gender</option>
-                    <option>Male</option>
-                    <option>Female</option>
-                    <option>Prefer not to say</option>
-                  </select>
-                </div>
-              
-                <!-- Email -->
-                <div class="mb-3">
-                  <label class="form-label">Email Address *</label>
-                  <input type="email" class="form-control" required>
-                </div>
-              
-                <!-- Phone -->
-                <div class="mb-3">
-                  <label class="form-label">Phone Number *</label>
-                  <input type="tel" class="form-control" required>
-                </div>
-              
-                <!-- Dental Service -->
-                <div class="mb-3">
-                  <label class="form-label">Select Dental Service *</label>
-                  <select class="form-select" required>
-                    <option selected disabled>Select service</option>
-                    <option>Braces Treatment</option>
-                    <option>Dental Check Up</option>
-                    <option>Dental Implants</option>
-                    <option>Dental Veneers</option>
-                    <option>Teeth Whitening</option>
-                    <option>Root Canal</option>
-                    <option>Scaling & Polishing</option>
-                    <option>Tooth Filling</option>
-                    <option>Tooth Extraction</option>
-                    <option>Bridge / Crown</option>
-                    <option>Other</option>
-                  </select>
-                </div>
-              
-                <!-- Payment Method -->
-                <div class="mb-3">
-                  <label class="form-label">Preferred Payment Method *</label>
-                  <select class="form-select" required>
-                    <option selected disabled>Select payment</option>
-                    <option>Cash</option>
-                    <option>Insurance</option>
-                  </select>
-                </div>
-              
-                <!-- Day of Week -->
-                <div class="mb-3">
-                  <label class="form-label">Day of the Week *</label>
-                  <select class="form-select" required>
-                    <option selected disabled>Select Week Day</option>
-                    <option>Monday</option>
-                    <option>Tuesday</option>
-                    <option>Wednesday</option>
-                    <option>Thursday</option>
-                    <option>Friday</option>
-                    <option>Saturday</option>
-                    <option>Sunday</option>
-                  </select>
-                </div>
-              
-                <!-- Time Slots -->
-                <div class="time-slots-wrapper mb-4">
-                  <h5 class="fw-bold mb-3 text-gold slot-heading">Select Time Slot *</h5>
-                  <div class="row g-2">
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="7:00 AM - 8:00 AM">7:00 AM – 8:00 AM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="8:00 AM - 9:00 AM">8:00 AM – 9:00 AM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="9:00 AM - 10:00 AM">9:00 AM – 10:00 AM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="10:00 AM - 11:00 AM">10:00 AM – 11:00 AM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="11:00 AM - 12:00 PM (Noon)">11:00 AM – 12:00 PM (Noon)</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="12:00 PM (Noon) - 1:00 PM">12:00 PM (Noon) – 1:00 PM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="1:00 PM - 2:00 PM">1:00 PM – 2:00 PM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="2:00 PM - 3:00 PM">2:00 PM – 3:00 PM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="3:00 PM - 4:00 PM">3:00 PM – 4:00 PM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="4:00 PM - 5:00 PM">4:00 PM – 5:00 PM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="5:00 PM - 6:00 PM">5:00 PM – 6:00 PM</div>
-                    </div>
-                    <div class="col-6 col-md-4 col-lg-3">
-                      <div class="time-slot-card" data-value="6:00 PM - 7:00 PM">6:00 PM – 7:00 PM</div>
-                    </div>
-                  </div>
-   
-                  <input type="hidden" name="time_slot" id="time_slot_input" required>
-                </div>
-             
-              
-              
-            <div class="mb-3">
-              <label class="form-label">Additional Notes</label>
-              <textarea class="form-control" rows="3"></textarea>
-            </div>
-            <div class="text-center">
-              <button type="submit" class="btn btn-appointment px-5 py-2">
-                <i class="bi bi-calendar-check me-2"></i> Submit  Your Booking
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-   
-    <div class="col-lg-4">
-      
-    
-        <div class="card p-3 mb-4 shadow-sm">
-          <h5 class="fw-bold text-primary">Search</h5>
-          <input type="text" class="form-control mt-2" placeholder="Search...">
-        </div>
-  
+
+  <section class="py-5">
+    <div class="container">
+      <div class="row g-5 align-items-center">
+        
        
-        <div class="card p-3 mb-4 shadow-sm">
-          <h5 class="fw-bold text-primary">Social Networks</h5>
-          <div class="d-flex gap-3 mt-2">
-            <a href="#" class="text-primary"><i class="bi bi-facebook fs-4"></i></a>
-            <a href="#" class="text-info"><i class="bi bi-twitter fs-4"></i></a>
-            <a href="#" class="text-danger"><i class="bi bi-instagram fs-4"></i></a>
-            <a href="#" class="text-primary"><i class="bi bi-linkedin fs-4"></i></a>
+        <div class="col-lg-6">
+          <h2 class="fw-bold" style="color:#0b2f7c;">What is Oral Surgery?</h2>
+          <p class="lead text-muted">
+            Oral surgery involves surgical procedures performed in the mouth and jaw area 
+            to address a wide range of dental issues. It helps restore function, 
+            relieve pain, and improve oral health.
+          </p>
+          <a href="appointment.html" class="btn btn-primary btn-lg mt-3 fw-bold px-4">Book an Appointment</a>
+        </div>
+        
+     
+        <div class="col-lg-6">
+          <div class="row g-3">
+            <div class="col-6">
+              <img src="oral-surgery1.jpg" alt="Oral Surgery 1" class="img-fluid rounded shadow-sm zoom-img">
+            </div>
+            <div class="col-6">
+              <img src="oral-surgery2.jpg" alt="Oral Surgery 2" class="img-fluid rounded shadow-sm zoom-img">
+            </div>
+            <div class="col-6">
+              <img src="oral-surgery3.jpg" alt="Oral Surgery 3" class="img-fluid rounded shadow-sm zoom-img">
+            </div>
+            <div class="col-6">
+              <img src="oral-surgery4.jpg" alt="Oral Surgery 4" class="img-fluid rounded shadow-sm zoom-img">
+            </div>
           </div>
         </div>
   
-  <div class="sidebar-box mb-4">
-    <h5 class="fw-bold" style="color:#d4af37;">Contact Information</h5>
-    <p class="mb-1"><i class="bi bi-geo-alt-fill me-2"></i> Nairobi, Kenya</p>
-    <p class="mb-1"><i class="bi bi-envelope-fill me-2"></i> 
-      <a href="mailto:wandelamichael@gmail.com" class="text-decoration-none">wandelamichael@gmail.com</a>
-    </p>
-    <p class="mb-1"><i class="bi bi-telephone-fill me-2"></i> 
-      <a href="tel:0714056017" class="text-decoration-none">0714056017</a>
-    </p>
-    <p class="mb-1"><i class="bi bi-whatsapp me-2"></i> 
-      <a href="https://wa.me/254715174889" target="_blank" class="text-decoration-none">0715174889 (Call/WhatsApp)</a>
-    </p>
-  </div>
-
-
-<div class="sidebar-box">
-    <h5 class="fw-bold" style="color:#d4af37;">Our Location</h5>
-    <p class="small">We are located at <strong>Nairobi, Kenya</strong></p>
-    <iframe 
-    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15955.216002094477!2d36.8219463!3d-1.2920659!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f10d2f0e1df!2sNairobi%2C%20Kenya!5e0!3m2!1sen!2ske!4v1727896543210!5m2!1sen!2ske" 
-    width="150%" 
-    height="600" 
-    style="border:0; border-radius:8px;" 
-    allowfullscreen="" 
-    loading="lazy" 
-    referrerpolicy="no-referrer-when-downgrade">
-  </iframe>
-  </div>
-
-</div>
+      </div>
     </div>
-  </div>
-
+  </section>
+  
 
 
      
