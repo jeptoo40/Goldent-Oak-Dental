@@ -393,30 +393,31 @@
       <!-- Left Column (Form) -->
       <div class="col-lg-8">
         <div style="background: rgba(44, 38, 38, 0.6); padding:30px; border-radius:10px; max-width: 90%; margin:auto;">
-          <form>
+          <form id="mobileClinicForm">
             <div class="mb-3">
               <label class="form-label text-white">Name *</label>
-              <input type="text" class="form-control" required>
+              <input type="text" name="full_name" class="form-control" required>
+              
             </div>
   
             <div class="mb-3">
               <label class="form-label text-white">Email *</label>
-              <input type="email" class="form-control" required>
+              <input type="email" name="email" class="form-control" required>
             </div>
   
             <div class="mb-3">
               <label class="form-label text-white">Phone No *</label>
-              <input type="tel" class="form-control" required>
+              <input type="tel" name="phone" class="form-control" required>
             </div>
   
             <div class="mb-3">
               <label class="form-label text-white">ID Number/ Passport *</label>
-              <input type="text" class="form-control" required>
+              <input type="text" name="id_number" class="form-control" required>
             </div>
   
             <div class="mb-3">
               <label class="form-label text-white">Mode of Payment *</label>
-              <select class="form-select" required>
+              <select name="payment_mode" class="form-select" required>
                 <option selected disabled>Select Option</option>
                 <option>Cash</option>
                 <option>Insurance Card</option>
@@ -425,38 +426,38 @@
   
             <div class="mb-3">
               <label class="form-label text-white">If you Have Insurance Card Please Select Your Provider *</label>
-              <select class="form-select">
+              <select name="insurance_provider" class="form-select">
+
                 <option selected disabled>No</option>
-                <option>General Accident Insurance</option>
-                <option>Jubilee Insurance</option>
-                <option>Pacific Insurance</option>
-                <option>First Assurance Company</option>
-                <option>Madison Insurance</option>
-                <option>U.A.P Insurance</option>
-                <option>KCB Insurance</option>
-                <option>KENGEN</option>
-                <option>AON</option>
-                <option>Minet Insurance</option>
-                <option>APA Insurance</option>
-                <option>Britam Insurance</option>
-                <option>Eagle Africa</option>
-                <option>NHIF Insurance</option>
-                <option>Heritage Insurance</option>
-                <option>KRA</option>
-                <option>AAR</option>
-                <option>CO-OP</option>
-                <option>MTN PACIS</option>
+                <option value="General Accident Insurance">General Accident Insurance</option>
+                <option value="Jubilee Insurance">Jubilee Insurance</option>
+
+                <option value="Pacific Insurance">Pacific Insurance</option>
+                
+                <option value="KCB Insurance">KCB Insurance</option>
+                <option value="KENGEN">KENGEN</option>
+                <option value="AON">AON</option>
+                <option value="Minet Insurance">Minet Insurance</option>
+                <option value="APA Insurance">APA Insurance</option>
+                <option value="Britam Insurance">Britam Insurance</option>
+                <option value="Eagle Africa">Eagle Africa</option>
+                <option  value="SHA Insurance">SHA Insurance</option>
+                <option value="Heritage Insurance">Heritage Insurance</option>
+                <option value="KRA">KRA</option>
+                <option value="AAR">AAR</option>
+                <option value="CO-OP">CO-OP</option>
+                <option value="MTN PACIS">MTN PACIS</option>
               </select>
             </div>
   
             <div class="mb-3">
               <label class="form-label text-white">Location *</label>
-              <input type="text" class="form-control" required>
+              <input type="text" name="location" class="form-control" required>
             </div>
   
             <div class="mb-3">
               <label class="form-label text-white">Do you have ample parking for the Mobile Clinic *</label>
-              <select class="form-select" required>
+              <select name="parking" class="form-select" required>
                 <option selected disabled>Select YES / NO</option>
                 <option>YES</option>
                 <option>NO</option>
@@ -465,7 +466,7 @@
   
             <div class="mb-3">
               <label class="form-label text-white">Message *</label>
-              <textarea class="form-control" required></textarea>
+              <textarea name="message" class="form-control" required></textarea>
             </div>
   
             <div class="text-center">
@@ -489,7 +490,7 @@
         </div>
       </div>
   
-      <!-- Right Column (Sidebar) -->
+
       <div class="col-lg-4">
         <div class="card p-3 mb-4 shadow-sm">
           <h5 class="fw-bold text-primary">Search</h5>
@@ -658,6 +659,52 @@ Designs by vebrasolutions.fwh.is </a>
 
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const form = document.getElementById("mobileClinicForm");
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const formData = new FormData(form);
+
+    fetch("api/mobile_clinic_booking.php", {
+      method: "POST",
+      body: formData
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            icon: "success",
+            title: "Booking Submitted!",
+            text: data.message,
+            timer: 2500,
+            showConfirmButton: false
+          });
+          form.reset();
+        } else {
+          Swal.fire({
+            icon: "warning",
+            title: "Oops!",
+            text: data.message
+          });
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Something went wrong. Please try again."
+        });
+      });
+  });
+});
+</script>
+
 
   <script>
     var typed = new Typed('#typed-text', {
