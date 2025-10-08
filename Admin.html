@@ -102,18 +102,20 @@
 
 
 
-<!-- LOGIN MODAL -->
+
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(15px); color: #fff;">
-      <div class="modal-header border-0">
-        <h5 class="modal-title" id="loginModalLabel">Dentist Login</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+    <div class="modal-content" style="background: rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); backdrop-filter: blur(15px); color:#fff;">
+      <div class="modal-header border-0 justify-content-center">
+        <i class="bi bi-box-arrow-in-right me-2" style="font-size: 1.5rem;"></i>
+        <h5 class="modal-title text-center" id="loginModalLabel">Login</h5>
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    
       <div class="modal-body">
-        <form action="includes/login.php" method="POST">
+        <form id="loginForm">
           <div class="mb-3">
-            <label class="form-label">User ID</label>
+            <label class="form-label">User ID </label>
             <input type="text" name="user_id" class="form-control" placeholder="Enter your ID" required>
           </div>
           <div class="mb-3">
@@ -127,28 +129,44 @@
   </div>
 </div>
 
-<!-- SIGNUP MODAL -->
+
+
 <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25); backdrop-filter: blur(15px); color: #fff;">
-      <div class="modal-header border-0">
-        <h5 class="modal-title" id="signupModalLabel">Register New Dentist</h5>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
+    <div class="modal-content" style="background: rgba(255,255,255,0.15); border:1px solid rgba(255,255,255,0.25); backdrop-filter: blur(15px); color:#fff;">
+      <div class="modal-header border-0 justify-content-center">
+        <i class="bi bi-person-plus-fill me-2" style="font-size: 1.5rem;"></i>
+        <h5 class="modal-title text-center" id="signupModalLabel">Create Account</h5>
+        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-2" data-bs-dismiss="modal" aria-label="Close"></button>
+    </div>
+    
       <div class="modal-body">
-        <form action="includes/signup.php" method="POST">
-          <div class="mb-3">
+        <form id="signupForm" enctype="multipart/form-data">
 
-              <label class="form-label">User ID</label>
-              <input type="text" name="user_id" class="form-control" placeholder="e.g., DOC001" required>
-            </div>
-            
+          <div class="mb-3">
+            <label class="form-label">User ID</label>
+            <input type="text" name="user_id" class="form-control" placeholder="e.g., DOC001" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            <input type="text" name="username" class="form-control" placeholder="Enter username" required>
+          </div>
+          <div class="mb-3">
             <label class="form-label">Full Name</label>
-            <input type="text" name="fullname" class="form-control" placeholder="Enter your full name" required>
+            <input type="text" name="fullname" class="form-control" placeholder="Enter full name" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Email</label>
             <input type="email" name="email" class="form-control" placeholder="Enter email" required>
+          </div>
+          <div class="mb-3">
+            <label for="profile_image">Profile Image</label>
+            <input type="file" name="profile_image" id="profile_image" class="form-control" accept="image/*">
+        </div>
+        
+          <div class="mb-3">
+            <label class="form-label">Phone</label>
+            <input type="text" name="phone" class="form-control" placeholder="Enter phone" required>
           </div>
           <div class="mb-3">
             <label class="form-label">Password</label>
@@ -160,15 +178,6 @@
     </div>
   </div>
 </div>
-
-
-
-
-
-
-
-
-
 
 
 
@@ -200,54 +209,102 @@
 
 
 
-
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Handle signup form submission
-      const signupForm = document.querySelector('#signupModal form');
-      signupForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const formData = new FormData(signupForm);
+    const loginForm = document.getElementById('loginForm');
     
-        const res = await fetch('includes/signup.php', {
-          method: 'POST',
-          body: formData
-        });
-    
-        const text = await res.text();
-        alert(text.trim()); // Show backend response
-        signupForm.reset();
-        const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
-        modal.hide();
-      });
-    
-      // Handle login form submission
-      const loginForm = document.querySelector('#loginModal form');
-      loginForm.addEventListener('submit', async (e) => {
+    loginForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const formData = new FormData(loginForm);
     
-        const res = await fetch('includes/login.php', {
-          method: 'POST',
-          body: formData
-        });
+        try {
+            const response = await fetch('includes/login.php', {
+                method: 'POST',
+                body: formData
+            });
     
-        const text = await res.text();
+            if (!response.ok) throw new Error('Network error');
     
-        if (text.includes('success')) {
-          alert('Login successful!');
-          window.location.href = 'dashboard.php'; // redirect to dashboard
-        } else {
-          alert(text.trim());
+            const data = await response.json();
+    
+            if (data.status === 'success') {
+                // Redirect to dashboard immediately
+                window.location.href = 'includes/dashboard.php';
+            } else {
+                // Show error inside the modal
+                const prevAlert = loginForm.querySelector('.alert');
+                if (prevAlert) prevAlert.remove();
+    
+                const alertDiv = document.createElement('div');
+                alertDiv.className = 'alert alert-danger text-center';
+                alertDiv.role = 'alert';
+                alertDiv.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i>${data.message}`;
+                loginForm.prepend(alertDiv);
+            }
+    
+        } catch (err) {
+            console.error(err);
+            const prevAlert = loginForm.querySelector('.alert');
+            if (prevAlert) prevAlert.remove();
+    
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert alert-danger text-center';
+            alertDiv.role = 'alert';
+            alertDiv.innerHTML = `<i class="bi bi-exclamation-triangle-fill me-2"></i>An error occurred.`;
+            loginForm.prepend(alertDiv);
         }
-      });
     });
     </script>
     
+    
 
 
 
+    <script>
+ const signupForm = document.querySelector('#signupModal form');
+const signupModalBody = document.querySelector('#signupModal .modal-body');
 
+signupForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    const formData = new FormData(signupForm);
+
+    const res = await fetch('includes/signup.php', { method: 'POST', body: formData });
+    const data = await res.json();
+
+    
+    const prevAlert = signupModalBody.querySelector('.alert');
+    if (prevAlert) prevAlert.remove();
+    const prevButton = signupModalBody.querySelector('.btn-login-now');
+    if (prevButton) prevButton.remove();
+
+   
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert ${data.status === 'success' ? 'alert-success' : 'alert-danger'}`;
+    alertDiv.textContent = data.message;
+    signupModalBody.prepend(alertDiv);
+
+    if (data.status === 'success') {
+        signupForm.reset();
+
+  
+        const loginNowBtn = document.createElement('button');
+        loginNowBtn.textContent = "Now Login";
+        loginNowBtn.className = "btn btn-custom w-100 mt-2 btn-login-now";
+        loginNowBtn.addEventListener('click', () => {
+     
+            const modal = bootstrap.Modal.getInstance(document.getElementById('signupModal'));
+            modal.hide();
+         
+            const loginModal = new bootstrap.Modal(document.getElementById('loginModal'));
+            loginModal.show();
+        });
+
+        signupModalBody.appendChild(loginNowBtn);
+    }
+});
+
+
+      </script>
+      
 
 
 
