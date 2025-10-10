@@ -227,10 +227,10 @@
             const data = await response.json();
     
             if (data.status === 'success') {
-                // Redirect to dashboard immediately
+           
                 window.location.href = 'includes/dashboard.php';
             } else {
-                // Show error inside the modal
+              
                 const prevAlert = loginForm.querySelector('.alert');
                 if (prevAlert) prevAlert.remove();
     

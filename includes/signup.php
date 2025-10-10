@@ -18,15 +18,15 @@ try {
         throw new Exception('Please fill in all fields.');
     }
 
-    // Check if user already exists
+   
     $check = $pdo->prepare("SELECT * FROM users WHERE user_id = :user_id OR email = :email");
     $check->execute([':user_id' => $user_id, ':email' => $email]);
     if ($check->fetch()) {
         throw new Exception('User ID or Email already exists.');
     }
 
-    // Handle profile image
-    $profile_image = 'profile.png'; // default
+
+    $profile_image = 'profile.png'; 
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === 0) {
         $ext = pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION);
         $allowed = ['jpg','jpeg','png','gif'];
@@ -36,10 +36,10 @@ try {
         }
     }
 
-    // Hash password
+    
     $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-    // Insert user into DB
+
     $stmt = $pdo->prepare("
         INSERT INTO users (user_id, username, fullname, email, phone, password_hash, profile_image, role, created_at)
         VALUES (:user_id, :username, :fullname, :email, :phone, :password_hash, :profile_image, 'admin', NOW())
