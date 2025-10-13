@@ -275,6 +275,7 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
                 <a class="nav-link" href="lab_cases.php">Lab Cases</a>
                 <a class="nav-link" href="invoices.php">Invoices</a>
                 <a class="nav-link" href="files.php">Files/Reports</a>
+                
             </nav>
         </div>
     </div>
