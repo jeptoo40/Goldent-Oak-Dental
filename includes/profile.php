@@ -1,125 +1,168 @@
 <?php
-require_once 'includes/db.php';
 session_start();
+require_once __DIR__ . '/db.php';
 
 if (!isset($_SESSION['user_id'])) {
-    header("Location: login.php");
+    header('Location: ../Admin.html');
     exit;
 }
 
 $user_id = $_SESSION['user_id'];
-$message = "";
 
 // Fetch current user data
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
+$stmt = $pdo->prepare("SELECT fullname, email, profile_image, password_hash FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if (!$user) {
-    die("User not found.");
-}
+$fullname = $user['fullname'] ?? '';
+$email = $user['email'] ?? '';
+$profile_image = $user['profile_image'] ?? 'profile.png';
+$current_hash = $user['password_hash'] ?? '';
 
-// Handle profile updates
+// Handle AJAX POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $fullname = trim($_POST['fullname']);
-    $email = trim($_POST['email']);
-    $phone = trim($_POST['phone']);
-    $new_password = trim($_POST['new_password']);
-    $profile_image = $user['profile_image'];
+    $response = ['success' => false, 'message' => ''];
+    $newFullname = trim($_POST['fullname'] ?? '');
+    $newEmail = trim($_POST['email'] ?? '');
+    $currentPassword = $_POST['current_password'] ?? '';
+    $newPassword = $_POST['new_password'] ?? '';
+    $confirmPassword = $_POST['confirm_password'] ?? '';
+
+    // Validate required fields
+    if (empty($newFullname) || empty($newEmail)) {
+        $response['message'] = 'Full name and email cannot be empty.';
+        echo json_encode($response);
+        exit;
+    }
+
+    // Validate password change if fields are filled
+    if (!empty($currentPassword) || !empty($newPassword) || !empty($confirmPassword)) {
+        if (!password_verify($currentPassword, $current_hash)) {
+            $response['message'] = 'Current password is incorrect.';
+            echo json_encode($response);
+            exit;
+        }
+        if ($newPassword !== $confirmPassword) {
+            $response['message'] = 'New password and confirmation do not match.';
+            echo json_encode($response);
+            exit;
+        }
+        $passwordHash = password_hash($newPassword, PASSWORD_DEFAULT);
+    } else {
+        $passwordHash = $current_hash; // keep existing password
+    }
 
     // Handle profile image upload
     if (isset($_FILES['profile_image']) && $_FILES['profile_image']['error'] === 0) {
-        $ext = pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION);
-        $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-        if (in_array(strtolower($ext), $allowed)) {
-            $profile_image = 'profile_' . time() . '_' . $user['username'] . '.' . $ext;
-            move_uploaded_file($_FILES['profile_image']['tmp_name'], __DIR__ . '/../images/' . $profile_image);
+        $allowed = ['jpg','jpeg','png','gif'];
+        $ext = strtolower(pathinfo($_FILES['profile_image']['name'], PATHINFO_EXTENSION));
+        if (in_array($ext, $allowed)) {
+            $newFileName = 'profile_' . $user_id . '.' . $ext;
+            $uploadPath = __DIR__ . '/../images/' . $newFileName;
+            if (move_uploaded_file($_FILES['profile_image']['tmp_name'], $uploadPath)) {
+                $profile_image = $newFileName;
+            }
         }
     }
 
-    // Update query
-    if (!empty($new_password)) {
-        $password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-        $sql = "UPDATE users SET fullname=?, email=?, phone=?, profile_image=?, password_hash=? WHERE id=?";
-        $params = [$fullname, $email, $phone, $profile_image, $password_hash, $user_id];
+    // Update database
+    $stmt = $pdo->prepare("UPDATE users SET fullname = ?, email = ?, profile_image = ?, password_hash = ? WHERE id = ?");
+    if ($stmt->execute([$newFullname, $newEmail, $profile_image, $passwordHash, $user_id])) {
+        $_SESSION['fullname'] = $newFullname;
+        $_SESSION['profile_image'] = $profile_image;
+        $response['success'] = true;
+        $response['message'] = 'Profile updated successfully!';
+        $response['fullname'] = $newFullname;
+        $response['profile_image'] = $profile_image;
     } else {
-        $sql = "UPDATE users SET fullname=?, email=?, phone=?, profile_image=? WHERE id=?";
-        $params = [$fullname, $email, $phone, $profile_image, $user_id];
+        $response['message'] = 'Failed to update profile.';
     }
 
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute($params);
-
-    $_SESSION['fullname'] = $fullname;
-    $message = "Profile updated successfully!";
-
-    // Refresh user data
-    $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
-    $stmt->execute([$user_id]);
-    $user = $stmt->fetch(PDO::FETCH_ASSOC);
+    echo json_encode($response);
+    exit;
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Profile Management</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <style>
-        body { background-color: #f8f9fa; }
-        .profile-card { max-width: 600px; margin: 50px auto; border-radius: 15px; }
-        .profile-img { border-radius: 50%; width: 120px; height: 120px; object-fit: cover; }
-        .btn-custom { border-radius: 25px; }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <div class="card profile-card shadow-sm p-4">
-        <h4 class="text-center mb-4"><i class="fa fa-user-cog me-2"></i>Profile Management</h4>
-
-        <?php if ($message): ?>
-            <div class="alert alert-success text-center"><?= htmlspecialchars($message) ?></div>
-        <?php endif; ?>
-
-        <form method="POST" enctype="multipart/form-data">
-            <div class="text-center mb-3">
-                <img src="../images/<?= htmlspecialchars($user['profile_image']); ?>" 
-                     alt="Profile" class="profile-img mb-2">
-                <div>
-                    <input type="file" name="profile_image" class="form-control mt-2" accept="image/*">
-                </div>
+<!-- HTML Form -->
+<div class="card shadow-sm">
+    <div class="card-header">
+        <h5 class="mb-0">Profile Management</h5>
+    </div>
+    <div class="card-body">
+        <form id="profileForm" enctype="multipart/form-data">
+            <div class="mb-3 text-center">
+                <img id="profilePreview" src="../images/<?php echo htmlspecialchars($profile_image); ?>" 
+                     alt="Profile" class="rounded-circle mb-2" width="100" height="100">
+                <input type="file" name="profile_image" class="form-control form-control-sm" onchange="previewImage(this)">
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Full Name</label>
-                <input type="text" name="fullname" class="form-control" value="<?= htmlspecialchars($user['fullname']); ?>" required>
+                <label for="fullname" class="form-label">Full Name</label>
+                <input type="text" name="fullname" id="fullname" class="form-control" value="<?php echo htmlspecialchars($fullname); ?>" required>
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" value="<?= htmlspecialchars($user['email']); ?>" required>
+                <label for="email" class="form-label">Email</label>
+                <input type="email" name="email" id="email" class="form-control" value="<?php echo htmlspecialchars($email); ?>" required>
             </div>
 
+            <hr>
+            <h6>Change Password</h6>
             <div class="mb-3">
-                <label class="form-label">Phone</label>
-                <input type="text" name="phone" class="form-control" value="<?= htmlspecialchars($user['phone']); ?>">
+                <label for="current_password" class="form-label">Current Password</label>
+                <input type="password" name="current_password" id="current_password" class="form-control">
             </div>
-
             <div class="mb-3">
-                <label class="form-label">New Password (optional)</label>
-                <input type="password" name="new_password" class="form-control" placeholder="Leave blank to keep current password">
+                <label for="new_password" class="form-label">New Password</label>
+                <input type="password" name="new_password" id="new_password" class="form-control">
             </div>
+            <div class="mb-3">
+                <label for="confirm_password" class="form-label">Confirm New Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control">
+            </div>
+            <small class="text-muted">Leave password fields empty if you don't want to change it.</small>
 
-            <div class="text-center">
-                <button type="submit" class="btn btn-primary btn-custom px-4"><i class="fa fa-save me-2"></i>Save Changes</button>
-                <a href="dashboard.php" class="btn btn-secondary btn-custom px-4">Cancel</a>
-            </div>
+            <button type="submit" class="btn btn-primary mt-2">Save Changes</button>
         </form>
     </div>
 </div>
 
-</body>
-</html>
+<script>
+// Preview selected image
+function previewImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = e => document.getElementById('profilePreview').src = e.target.result;
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+// AJAX form submission
+document.getElementById('profileForm').addEventListener('submit', async function(e){
+    e.preventDefault();
+    const fd = new FormData(this);
+
+    try {
+        const res = await fetch('profile.php', {
+            method: 'POST',
+            body: fd
+        });
+        const data = await res.json();
+
+        if (data.success) {
+            alert(data.message);
+
+            // Update right sidebar instantly
+            const sidebarName = document.getElementById('sidebarFullname');
+            const sidebarImg = document.getElementById('sidebarProfileImage');
+            if (sidebarName) sidebarName.textContent = data.fullname;
+            if (sidebarImg) sidebarImg.src = '../images/' + data.profile_image + '?t=' + Date.now();
+        } else {
+            alert(data.message);
+        }
+    } catch (err) {
+        console.error(err);
+        alert('Error updating profile.');
+    }
+});
+</script>

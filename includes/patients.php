@@ -24,6 +24,8 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
             <button class="btn btn-primary" onclick="load()">Search</button>
             <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addPatientModal">Add Patient</button>
         </div>
+        <button class="btn btn-outline-info" onclick="downloadPatients()">Download List</button>
+
         <div class="table-responsive">
             <table class="table table-striped" id="tbl"></table>
         </div>
@@ -34,6 +36,7 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'admin') {
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header"><h5 class="modal-title">Add Patient</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+     
       <div class="modal-body">
         <form id="patientForm">
           <input type="hidden" name="id"/>
@@ -155,7 +158,13 @@ async function delPatient(id){
   load();
 }
 load();
+
+function downloadPatients() {
+  window.location.href = '/admin/patient_export.php';
+}
+
 </script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

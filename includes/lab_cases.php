@@ -16,10 +16,13 @@ require_once __DIR__ . '/db.php';
 </head>
 <body class="p-3">
     <div class="container">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h4>Lab Cases</h4>
-          
-        </div>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Lab Cases</h4>
+    <div>
+        <a href="lab_export_all.php" class="btn btn-outline-success btn-sm" target="_blank">Download All (PDF)</a>
+    </div>
+</div>
+
     <div class="d-flex justify-content-end mb-2">
         <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#labModal">Add Lab Case</button>
     </div>
@@ -39,6 +42,8 @@ require_once __DIR__ . '/db.php';
                     echo '<td>';
                     echo '<button class="btn btn-sm btn-outline-secondary me-1" onclick="editCase('.(int)$r['id'].')">Edit</button>';
                     echo '<button class="btn btn-sm btn-outline-danger" onclick="delCase('.(int)$r['id'].')">Delete</button>';
+                    echo '<a href="lab_export_single.php?id='.(int)$r['id'].'" class="btn btn-sm btn-outline-success" target="_blank">Download</a>';
+
                     echo '</td>';
                     echo '</tr>';
                 }
@@ -116,4 +121,9 @@ require_once __DIR__ . '/db.php';
     </div>
 </body>
 </html>
+
+
+
+
+
 

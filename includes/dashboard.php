@@ -275,6 +275,7 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
                 <a class="nav-link" href="lab_cases.php">Lab Cases</a>
                 <a class="nav-link" href="invoices.php">Invoices</a>
                 <a class="nav-link" href="files.php">Files/Reports</a>
+                <a class="nav-link" href="profile.php">Profile Management</a>
                 
             </nav>
         </div>
@@ -291,7 +292,12 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
             <a href="patients.php"><i class="fa fa-users me-2"></i>Patients</a>
             <a href="lab_cases.php"><i class="fa fa-flask me-2"></i>Lab Cases</a>
             <a href="invoices.php"><i class="fa fa-file-invoice-dollar me-2"></i>Invoices</a>
-            <a href="files.php"><i class="fa fa-folder-open me-2"></i>Files/Repots</a>
+            <a href="files.php"><i class="fa fa-folder-open me-2"></i>Files/Reports</a>
+            <a href="profile.php" class="nav-link d-flex align-items-center">
+  <i class="fa-solid fa-user-gear me-2"></i>
+  <span>Profile Management</span>
+</a>
+
         </nav>
 
         <div class="logout mt-3">
@@ -444,15 +450,13 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
     </main>
 
 
-    <aside class="right-sidebar">
-        <div class="text-center mb-3">
-        <img src="../images/<?php echo htmlspecialchars($profile_image); ?>" 
-     alt="Profile" class="rounded-circle mb-2" width="80" height="80">
-
-<h6 class="mb-0"><?php echo htmlspecialchars($fullname); ?></h6>
-<small class="text-muted">Administrator</small>
-
-        </div>
+    <aside class="right-sidebar" id="sidebarProfile">
+    <div class="text-center mb-3">
+        <img id="sidebarProfileImage" src="../images/<?php echo htmlspecialchars($profile_image); ?>" 
+             alt="Profile" class="rounded-circle mb-2" width="80" height="80">
+        <h6 class="mb-0" id="sidebarFullname"><?php echo htmlspecialchars($fullname); ?></h6>
+        <small class="text-muted">Administrator</small>
+    </div>
 
         <div class="d-grid gap-2 mb-3">
             <a href="patients.php?open=add" class="btn btn-primary btn-sm spa-link"><i class="fa fa-user-plus me-1"></i> Add Patient</a>
