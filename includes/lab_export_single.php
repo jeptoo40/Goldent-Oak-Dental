@@ -28,7 +28,7 @@ if (file_exists($logoPath)) {
 }
 
 $pdf->SetFont('Arial', 'B', 16);
-$pdf->Cell(0, 10, 'GOLDENT OAK DENTAL CLINIC', 0, 1, 'C');
+$pdf->Cell(0, 10, 'GOLDENT OAK DENTAL CARE', 0, 1, 'C');
 $pdf->SetFont('Arial', 'B', 14);
 $pdf->Cell(0, 10, 'Lab Case Details', 0, 1, 'C');
 $pdf->Ln(10);

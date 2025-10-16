@@ -21,7 +21,8 @@ try {
     $mobileClinicBookings = (int)$pdo->query("SELECT COUNT(*) FROM mobile_clinic_bookings")->fetchColumn();
 
     $totalPatients = (int)$pdo->query("SELECT COUNT(*) FROM patients")->fetchColumn();
-    $patientMessages = (int)$pdo->query("SELECT COUNT(*) FROM patients WHERE DATE(created_at) = CURDATE()")->fetchColumn();
+  $patientMessages = (int)$pdo->query("SELECT COUNT(*) FROM messages")->fetchColumn();
+
 
 } catch (PDOException $e) {
 
@@ -276,7 +277,6 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
                 <a class="nav-link" href="invoices.php">Invoices</a>
                 <a class="nav-link" href="files.php">Files/Reports</a>
                 <a class="nav-link" href="profile.php">Profile Management</a>
-                
             </nav>
         </div>
     </div>
@@ -293,11 +293,10 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
             <a href="lab_cases.php"><i class="fa fa-flask me-2"></i>Lab Cases</a>
             <a href="invoices.php"><i class="fa fa-file-invoice-dollar me-2"></i>Invoices</a>
             <a href="files.php"><i class="fa fa-folder-open me-2"></i>Files/Reports</a>
-            <a href="profile.php" class="nav-link d-flex align-items-center">
+             <a href="profile.php" class="nav-link d-flex align-items-center">
   <i class="fa-solid fa-user-gear me-2"></i>
   <span>Profile Management</span>
 </a>
-
         </nav>
 
         <div class="logout mt-3">
@@ -392,7 +391,7 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
                     <div class="card shadow-sm h-100">
                         <div class="card-body text-center position-relative" style="cursor:pointer">
                             <i class="fa fa-envelope fa-2x text-danger"></i>
-                            <h6 class="mt-2">Messages Today</h6>
+                            <h6 class="mt-2">Messages </h6>
                             <h4 class="mb-0"><?php echo htmlspecialchars($patientMessages); ?></h4>
                             <a href="messages.php" class="stretched-link spa-link" aria-label="View messages"></a>
                         </div>
@@ -450,7 +449,7 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
     </main>
 
 
-    <aside class="right-sidebar" id="sidebarProfile">
+     <aside class="right-sidebar" id="sidebarProfile">
     <div class="text-center mb-3">
         <img id="sidebarProfileImage" src="../images/<?php echo htmlspecialchars($profile_image); ?>" 
              alt="Profile" class="rounded-circle mb-2" width="80" height="80">
@@ -542,7 +541,7 @@ $profile_image = $user['profile_image'] ?? 'profile.png';
         <hr class="border-light my-3">
 
         <p class="mb-0 small">
-            &copy; <?php echo date('Y'); ?> <strong>Golden Oak Dental Clinic</strong>. All rights reserved |
+            &copy; <?php echo date('Y'); ?> <strong>Goldent Oak Dental Care</strong>. All rights reserved |
             <a href="https://vebrasolutions.fwh.is" target="_blank" 
                style="color: #13aac4; text-decoration: none;">
                Designs by vebrasolutions.fwh.is
